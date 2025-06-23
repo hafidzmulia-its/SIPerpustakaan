@@ -58,31 +58,112 @@ class HomeController extends Controller
             ]);
         }
     }
-    public function popular()
+    public function popular(Request $request)
     {
-        $bukus = Buku::with(['eksemplar.peminjaman'])
+        $search = $request->search;
+        $sort_by = $request->get('sort_by', 'kode_buku');
+        $sort_dir = $request->get('sort_dir', 'desc');
+        $allowed = ['kode_buku', 'judul', 'pengarang', 'tahun_terbit', 'peminjaman'];
+    
+        $bukus = \App\Models\Buku::with(['eksemplar.peminjaman'])
             ->get()
-            ->each->append(['tersedia', 'total_peminjam'])
-            ->sortByDesc(fn($buku) => $buku->eksemplar->sum(fn($e) => $e->peminjaman->count()))
-            ->values();
+            ->each->append(['tersedia', 'total_peminjam']);
+    
+        // Sort by popularity (total peminjam)
+        $bukus = $bukus->sortByDesc(fn($buku) => $buku->eksemplar->sum(fn($e) => $e->peminjaman->count()))->values();
+    
+        // Filter by search if needed
+        if ($search) {
+            $bukus = $bukus->filter(function ($buku) use ($search) {
+                return str_contains(strtolower($buku->judul ?? ''), strtolower($search))
+                    || str_contains(strtolower($buku->pengarang ?? ''), strtolower($search))
+                    || str_contains(strtolower($buku->kode_buku ?? ''), strtolower($search))
+                    || str_contains(strtolower($buku->tahun_terbit ?? ''), strtolower($search));
+            })->values();
+        }
+    
+        // Sort by selected column if needed
+        if (in_array($sort_by, $allowed)) {
+            if ($sort_by === 'peminjaman') {
+                $bukus = $sort_dir === 'desc'
+                    ? $bukus->sortByDesc(fn($buku) => $buku->eksemplar->sum(fn($e) => $e->peminjaman->count()))->values()
+                    : $bukus->sortBy(fn($buku) => $buku->eksemplar->sum(fn($e) => $e->peminjaman->count()))->values();
+            } else {
+                $bukus = $sort_dir === 'desc'
+                    ? $bukus->sortByDesc($sort_by)->values()
+                    : $bukus->sortBy($sort_by)->values();
+            }
+        }
+    
+        // Paginate manually since it's a collection
+        $perPage = $request->get('per_page', 20);
+        $page = $request->get('page', 1);
+        $paginated = new \Illuminate\Pagination\LengthAwarePaginator(
+            $bukus->forPage($page, $perPage),
+            $bukus->count(),
+            $perPage,
+            $page,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
     
         return view('buku_all', [
             'title' => 'Semua Buku Populer',
-            'bukus' => $bukus,
+            'bukus' => $paginated,
+            'allowed' => $allowed,
+            'search' => $search,
+            'sort_by' => $sort_by,
+            'sort_dir' => $sort_dir,
         ]);
     }
-
-    public function tersedia()
+    
+    public function tersedia(Request $request)
     {
-        $bukus = Buku::with(['eksemplar.peminjaman'])
+        $search = $request->search;
+        $sort_by = $request->get('sort_by', 'kode_buku');
+        $sort_dir = $request->get('sort_dir', 'asc');
+        $allowed = ['kode_buku', 'judul', 'pengarang', 'tahun_terbit'];
+    
+        $bukus = \App\Models\Buku::with(['eksemplar.peminjaman'])
             ->get()
             ->each->append('tersedia')
             ->filter(fn($buku) => $buku->tersedia > 0)
             ->values();
-
+    
+        // Filter by search if needed
+        if ($search) {
+            $bukus = $bukus->filter(function ($buku) use ($search) {
+                return str_contains(strtolower($buku->judul), strtolower($search))
+                    || str_contains(strtolower($buku->pengarang), strtolower($search))
+                    || str_contains(strtolower($buku->kode_buku), strtolower($search))
+                    || str_contains(strtolower($buku->tahun_terbit), strtolower($search));
+            })->values();
+        }
+    
+        // Sort by selected column if needed
+        if (in_array($sort_by, $allowed)) {
+            $bukus = $sort_dir === 'desc'
+                ? $bukus->sortByDesc($sort_by)->values()
+                : $bukus->sortBy($sort_by)->values();
+        }
+    
+        // Paginate manually since it's a collection
+        $perPage = $request->get('per_page', 20);
+        $page = $request->get('page', 1);
+        $paginated = new \Illuminate\Pagination\LengthAwarePaginator(
+            $bukus->forPage($page, $perPage),
+            $bukus->count(),
+            $perPage,
+            $page,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+    
         return view('buku_all', [
             'title' => 'Semua Buku Tersedia',
-            'bukus' => $bukus,
+            'bukus' => $paginated,
+            'allowed' => $allowed,
+            'search' => $search,
+            'sort_by' => $sort_by,
+            'sort_dir' => $sort_dir,
         ]);
     }
     /**

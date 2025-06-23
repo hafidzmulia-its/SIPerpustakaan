@@ -239,7 +239,7 @@
                                     {{-- Book cover --}}
                                     <img :src="`/storage/${buku.cover}`"
                                          :alt="buku.judul"
-                                         class="h-60 object-cover rounded-lg shadow-md mx-auto">
+                                         class="h-64 max-w-44 object-cover rounded-lg shadow-md mx-auto">
                                     {{-- If available info needed: no overlay --}}
                                     <div class="mt-2 text-center">
                                         <p class="text-sm font-medium text-[#493628]" x-text="buku.judul"></p>
@@ -282,27 +282,77 @@
 
         {{-- Modal for Buku Detail --}}
         <div
-            x-show="bukuDetail.show"
-            x-cloak
-            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-        >
-            <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
-                <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" @click="bukuDetail.close()">✕</button>
-                <img :src="`/storage/${bukuDetail.buku.cover}`"
+    x-show="bukuDetail.show"
+    x-cloak
+    @keydown.escape.window="bukuDetail.close()"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 p-4"
+>
+    <!-- Modal Card -->
+    <div 
+        @click.away="bukuDetail.close()"
+        class="shadow-lg rounded-2xl overflow-hidden w-full max-w-2xl bg-activeBg text-accentDark transform transition-all"
+        x-transition:enter="ease-out duration-300"
+        x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+        x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+        x-transition:leave="ease-in duration-200"
+        x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+        x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+    >
+        <!-- Modal Header -->
+        <div class="bg-thead p-4 flex justify-between items-center">
+            <h3 class="text-lg font-bold text-white" x-text="bukuDetail.buku.judul"></h3>
+            <button class="p-1 rounded-full text-white hover:bg-white/20 transition-colors" @click="bukuDetail.close()">
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <!-- Left Column: Book Cover -->
+            <div class="md:col-span-1">
+                <img :src="bukuDetail.buku.cover ? `/storage/${bukuDetail.buku.cover}` : 'https://placehold.co/300x450/D2C2B5/FFFFFF?text=No+Cover'"
                      :alt="bukuDetail.buku.judul"
-                     class="h-64 object-cover rounded-lg mx-auto mb-4">
-                <h3 class="text-lg font-bold text-[#493628] mb-2" x-text="`Kode Buku: ${bukuDetail.buku.kode_buku}`"></h3>
-                <p><span class="font-semibold">Judul Buku:</span> <span x-text="bukuDetail.buku.judul"></span></p>
-                <p><span class="font-semibold">Pengarang:</span> <span x-text="bukuDetail.buku.pengarang"></span></p>
-                <p><span class="font-semibold">Tahun Terbit:</span> <span x-text="bukuDetail.buku.tahun_terbit"></span></p>
-                <template x-if="bukuDetail.buku.tersedia !== undefined">
-                    <p><span class="font-semibold">Jumlah Tersedia:</span> <span x-text="bukuDetail.buku.tersedia"></span></p>
-                </template>
-                <template x-if="bukuDetail.buku.total_peminjam !== undefined">
-                    <p><span class="font-semibold">Jumlah Peminjam:</span> <span x-text="bukuDetail.buku.total_peminjam"></span></p>
-                </template>
+                     class="w-full h-auto object-cover rounded-lg shadow-xl border-4 border-white"
+                     onerror="this.onerror=null;this.src='https://placehold.co/300x450/D2C2B5/FFFFFF?text=No+Cover';">
+            </div>
+
+            <!-- Right Column: Book Details -->
+            <div class="md:col-span-2 flex flex-col space-y-4">
+                <div>
+                    <span class="font-mono text-sm bg-gray-200 text-gray-700 px-3 py-1 rounded-full" x-text="bukuDetail.buku.kode_buku"></span>
+                </div>
+                
+                <div>
+                    <p class="font-semibold">Pengarang</p>
+                    <p class="text-gray-700" x-text="bukuDetail.buku.pengarang"></p>
+                </div>
+                
+                <div>
+                    <p class="font-semibold">Tahun Terbit</p>
+                    <p class="text-gray-700" x-text="bukuDetail.buku.tahun_terbit"></p>
+                </div>
+
+                <!-- Stats Section -->
+                <div class="pt-4 border-t border-gray-300 flex items-center gap-6">
+                    <template x-if="bukuDetail.buku.tersedia !== undefined">
+                        <div class="text-center">
+                            <p class="text-2xl font-black" x-text="bukuDetail.buku.tersedia"></p>
+                            <p class="text-sm font-medium">Tersedia</p>
+                        </div>
+                    </template>
+                    <template x-if="bukuDetail.buku.total_peminjam !== undefined">
+                         <div class="text-center">
+                            <p class="text-2xl font-black" x-text="bukuDetail.buku.total_peminjam"></p>
+                            <p class="text-sm font-medium">Dipinjam</p>
+                        </div>
+                    </template>
+                </div>
             </div>
         </div>
+    </div>
+</div>
+
     </div>
     @endif
 </x-app-layout>

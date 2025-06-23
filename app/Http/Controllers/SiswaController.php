@@ -65,15 +65,30 @@ class SiswaController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'nis' => 'required|unique:siswas,nis',
-            'nama_siswa' => 'required',
-            'kelas' => 'required',
-        ]);
-        Siswa::create($validated);
-        return redirect()->route('siswa.index')->with('success', 'Siswa berhasil ditambahkan.');
-    }
+{
+    $validated = $request->validate([
+        'nis' => 'required|unique:siswas,nis|unique:users,username',
+        'nama_siswa' => 'required',
+        'kelas' => 'required',
+        'password' => 'required|min:6',
+    ]);
+
+    // Create User first
+    $user = \App\Models\User::create([
+        'username' => $validated['nis'],
+        'password' => bcrypt($validated['password']),
+        'level_user' => 'siswa',
+    ]);
+
+    // Then create Siswa
+    \App\Models\Siswa::create([
+        'nis' => $validated['nis'],
+        'nama_siswa' => $validated['nama_siswa'],
+        'kelas' => $validated['kelas'],
+    ]);
+
+    return redirect()->route('siswa.index')->with('success', 'Siswa dan akun berhasil ditambahkan.');
+}
 
     /**
      * Display the specified resource.

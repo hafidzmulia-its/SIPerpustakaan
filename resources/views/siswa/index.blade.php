@@ -154,64 +154,68 @@
 
 
     {{-- Modal Create --}}
-    <div x-data="{ open: false }" x-show="open" @open-create.window="open = true" @close-modal.window="open = false" @keydown.escape.window="open = false" style="display: none" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div @click.away="open = false" class="shadow-lg rounded-2xl overflow-hidden w-full max-w-md">
-            <div class="bg-thead p-4"><h3 class="font-bold text-white">Tambah Data Siswa</h3></div>
-            <div class="bg-activeBg p-6">
-                <form method="POST" action="{{ route('siswa.store') }}" class="space-y-4">
-                    @csrf
-                    <div>
-                        <label class="font-semibold text-accentDark">Username (NIS)</label>
-                        <select name="nis" class="mt-1 w-full p-2 bg-gray-200 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-accentDark" required>
-                            <option value="">-- Pilih NIS --</option>
-                            @foreach($eligibleUsers as $user)
-                                <option value="{{ $user->username }}">{{ $user->username }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label class="font-semibold text-accentDark">Nama Siswa</label>
-                        <input type="text" name="nama_siswa" class="mt-1 w-full p-2 bg-gray-200 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-accentDark" required>
-                    </div>
-                    <div>
-                        <label class="font-semibold text-accentDark">Kelas</label>
-                        <input type="text" name="kelas" class="mt-1 w-full p-2 bg-gray-200 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-accentDark" required>
-                    </div>
-                    <div class="flex gap-4 justify-end pt-4">
-                        <button class="px-6 py-2 font-semibold text-gray-700 bg-gray-300 rounded-lg hover:bg-gray-400 transition" type="button" @click="open = false">BATAL</button>
-                        <button class="px-6 py-2 font-semibold text-white bg-green-500 rounded-lg hover:bg-green-600 transition" type="submit">SIMPAN</button>
-                    </div>
-                </form>
-            </div>
+<div x-data="{ open: false }" x-show="open" @open-create.window="open = true" @close-modal.window="open = false" @keydown.escape.window="open = false" style="display: none" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div @click.away="open = false" class="shadow-lg rounded-2xl overflow-hidden w-full max-w-md">
+        <div class="bg-thead p-4"><h3 class="font-bold text-white">Tambah Data Siswa</h3></div>
+        <div class="bg-activeBg p-6">
+            <form method="POST" action="{{ route('siswa.store') }}" class="space-y-4">
+                @csrf
+                <div>
+                    <label class="font-semibold text-accentDark">NIS</label>
+                    <input type="text" name="nis" class="mt-1 w-full p-2 bg-gray-200 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-accentDark" required>
+                </div>
+                <div>
+                    <label class="font-semibold text-accentDark">Password Akun</label>
+                    <input type="password" name="password" class="mt-1 w-full p-2 bg-gray-200 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-accentDark" required>
+                </div>
+                <div>
+                    <label class="font-semibold text-accentDark">Nama Siswa</label>
+                    <input type="text" name="nama_siswa" class="mt-1 w-full p-2 bg-gray-200 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-accentDark" required>
+                </div>
+                <div>
+                    <label class="font-semibold text-accentDark">Kelas</label>
+                    <input type="text" name="kelas" class="mt-1 w-full p-2 bg-gray-200 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-accentDark" required>
+                </div>
+                <div class="flex gap-4 justify-end pt-4">
+                    <button class="px-6 py-2 font-semibold text-gray-700 bg-gray-300 rounded-lg hover:bg-gray-400 transition" type="button" @click="open = false">BATAL</button>
+                    <button class="px-6 py-2 font-semibold text-white bg-green-500 rounded-lg hover:bg-green-600 transition" type="submit">SIMPAN</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
     {{-- Modal Edit --}}
-    <div x-data="{ open: false, siswa: {} }" x-show="open" @open-edit.window="open = true; siswa = $event.detail" @close-modal.window="open = false" @keydown.escape.window="open = false" style="display: none" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div @click.away="open = false" class="shadow-lg rounded-2xl overflow-hidden w-full max-w-md">
-            <div class="bg-thead p-4"><h3 class="font-bold text-white">Edit Data Siswa</h3></div>
-            <div class="bg-activeBg p-6">
-                <form method="POST" :action="'/siswa/' + siswa.nis" class="space-y-4">
-                    @csrf
-                    @method('PUT')
-                    <div>
-                        <label class="font-semibold text-accentDark">NIS</label>
-                        <input type="text" name="nis" class="mt-1 w-full p-2 bg-gray-300 border border-gray-400 rounded-lg text-gray-500 cursor-not-allowed" x-model="siswa.nis" required readonly>
-                    </div>
-                    <div>
-                        <label class="font-semibold text-accentDark">Nama Siswa</label>
-                        <input type="text" name="nama_siswa" class="mt-1 w-full p-2 bg-gray-200 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-accentDark" x-model="siswa.nama_siswa" required>
-                    </div>
-                    <div>
-                        <label class="font-semibold text-accentDark">Kelas</label>
-                        <input type="text" name="kelas" class="mt-1 w-full p-2 bg-gray-200 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-accentDark" x-model="siswa.kelas" required>
-                    </div>
-                    <div class="flex gap-4 justify-end pt-4">
-                        <button class="px-6 py-2 font-semibold text-gray-700 bg-gray-300 rounded-lg hover:bg-gray-400 transition" type="button" @click="open = false">BATAL</button>
-                        <button class="px-6 py-2 font-semibold text-white bg-green-500 rounded-lg hover:bg-green-600 transition" type="submit">SIMPAN</button>
-                    </div>
-                </form>
-            </div>
+    {{-- Modal Edit --}}
+<div x-data="{ open: false, siswa: {} }" x-show="open" @open-edit.window="open = true; siswa = $event.detail" @close-modal.window="open = false" @keydown.escape.window="open = false" style="display: none" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div @click.away="open = false" class="shadow-lg rounded-2xl overflow-hidden w-full max-w-md">
+        <div class="bg-thead p-4"><h3 class="font-bold text-white">Edit Data Siswa</h3></div>
+        <div class="bg-activeBg p-6">
+            <form method="POST" :action="'/siswa/' + siswa.nis" class="space-y-4">
+                @csrf
+                @method('PUT')
+                <div>
+                    <label class="font-semibold text-accentDark">NIS</label>
+                    <input type="text" name="nis" class="mt-1 w-full p-2 bg-gray-300 border border-gray-400 rounded-lg text-gray-500 cursor-not-allowed" x-model="siswa.nis" required readonly>
+                </div>
+                <div>
+                    <label class="font-semibold text-accentDark">Password Akun (isi jika ingin ganti)</label>
+                    <input type="password" name="password" class="mt-1 w-full p-2 bg-gray-200 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-accentDark">
+                </div>
+                <div>
+                    <label class="font-semibold text-accentDark">Nama Siswa</label>
+                    <input type="text" name="nama_siswa" class="mt-1 w-full p-2 bg-gray-200 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-accentDark" x-model="siswa.nama_siswa" required>
+                </div>
+                <div>
+                    <label class="font-semibold text-accentDark">Kelas</label>
+                    <input type="text" name="kelas" class="mt-1 w-full p-2 bg-gray-200 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-accentDark" x-model="siswa.kelas" required>
+                </div>
+                <div class="flex gap-4 justify-end pt-4">
+                    <button class="px-6 py-2 font-semibold text-gray-700 bg-gray-300 rounded-lg hover:bg-gray-400 transition" type="button" @click="open = false">BATAL</button>
+                    <button class="px-6 py-2 font-semibold text-white bg-green-500 rounded-lg hover:bg-green-600 transition" type="submit">SIMPAN</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 </x-app-layout>

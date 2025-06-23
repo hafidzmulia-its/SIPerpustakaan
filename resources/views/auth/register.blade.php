@@ -22,7 +22,7 @@
 
                 <!-- Level User -->
                 <div class="mt-4">
-                    <x-input-label for="level_user" :value="__('Staus')" class="font-semibold" />
+                    <x-input-label for="level_user" :value="__('Status')" class="font-semibold" />
                     <select id="level_user" name="level_user"
                         class="block mt-1 w-full border-2 border-gray-600 rounded-xl font-semibold focus:border-[#DFAEB1] focus:ring-[#DFAEB1]"
                         x-model="level" required>

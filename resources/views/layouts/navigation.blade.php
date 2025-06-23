@@ -61,7 +61,19 @@
                 <img src="{{ asset('storage/assets/pengembalian.png') }}" alt="Pengembalian" class="w-[86px]">
                 <span class="ml-2">Pengembalian</span>
             </x-sidebar-link>
-
+            @if(Auth::user()->level_user === 'Petugas')
+            <x-sidebar-link 
+                :href="route('siswa.index')" 
+                :active="request()->routeIs('siswa.*')"
+                class="flex flex-col items-center justify-center w-32 px-12"
+            >
+                <img src="{{ asset('storage/assets/masterdata.png') }}" alt="Pengembalian" class="w-[86px]">
+                <span class="ml-2">Manajemen</span>
+            </x-sidebar-link>
+            @endif
+            {{-- Denda --}}
+            @if(Auth::user()->level_user === 'Admin')
+            {{-- Manajemen User --}}
             {{-- Manajemen Data (toggle submenu) --}}
             <div x-data="{ open: false }" class="relative">
                 <button type="button" @click="open = !open" class="w-full">
@@ -87,6 +99,7 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             {{-- Laporan --}}
             <x-sidebar-link 

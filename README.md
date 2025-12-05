@@ -1,61 +1,257 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📚 SI Perpustakaan (Library Management System)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A comprehensive web-based library management system built with modern web technologies. This application streamlines library operations including book management, student records, lending transactions, and overdue fine calculations.
 
-## About Laravel
+## ✨ Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 📖 Book Management
+- Complete CRUD operations for books (Create, Read, Update, Delete with Soft Delete)
+- Book cover image upload and management
+- Multiple book copies (eksemplar) tracking
+- Search and filter by title, author, and publication year
+- Sort by various columns (code, title, author, year)
+- Popular books tracking based on borrowing frequency
+- Available books filtering
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 👥 Student Management
+- Student registration and profile management
+- Student borrowing history tracking
+- NIS (Student ID) based identification
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 📋 Lending System
+- Book lending transaction management
+- Real-time availability checking
+- Borrowing period tracking (7-day limit)
+- Multiple book copies management per title
 
-## Learning Laravel
+### 💰 Return & Fine Management
+- Automated return processing
+- Late return detection (7-day grace period)
+- Automatic fine calculation (Rp 1,000 per day)
+- Fine payment tracking
+- Comprehensive lending reports with statistics
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 👤 User & Authentication
+- Secure user authentication with Laravel Breeze
+- Multi-user management
+- Profile management
+- Role-based access control
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 📊 Dashboard & Analytics
+- Overview of library statistics
+- Popular books carousel
+- Available books showcase
+- Quick access to all major functions
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠️ Tech Stack
 
-## Laravel Sponsors
+### Backend
+- **PHP 8.2+** - Modern PHP with latest features
+- **Laravel 12.x** - Latest Laravel framework
+- **MySQL** - Relational database management
+- **Laravel Eloquent ORM** - Database abstraction layer
+- **Laravel Breeze** - Authentication scaffolding
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Frontend
+- **Blade Templates** - Laravel's templating engine
+- **Tailwind CSS 3.x** - Utility-first CSS framework
+- **Alpine.js 3.x** - Lightweight JavaScript framework
+- **Vite 6.x** - Modern frontend build tool
+- **Axios** - HTTP client for API requests
 
-### Premium Partners
+### Development Tools
+- **Composer** - PHP dependency management
+- **NPM** - JavaScript package management
+- **Laravel Pint** - PHP code style fixer
+- **Laravel Sail** - Docker development environment
+- **Laravel Pail** - Real-time log viewer
+- **PHPUnit** - Testing framework
+- **Faker** - Test data generation
+- **Concurrently** - Run multiple dev servers
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Deployment
+- **Railway** - Cloud platform deployment
+- **Nixpacks** - Build configuration
+- Procfile for process management
 
-## Contributing
+## 📋 Prerequisites
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- PHP >= 8.2
+- Composer
+- Node.js >= 18.x
+- MySQL >= 8.0
+- NPM or Yarn
 
-## Code of Conduct
+## 🚀 Installation
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 1. Clone the repository
+```bash
+git clone https://github.com/hafidzmulia-its/SIPerpustakaan.git
+cd SIPerpustakaan
+```
 
-## Security Vulnerabilities
+### 2. Install PHP dependencies
+```bash
+composer install
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 3. Install JavaScript dependencies
+```bash
+npm install
+```
 
-## License
+### 4. Environment setup
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 5. Configure database
+Edit `.env` file with your database credentials:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=si_perpustakaan
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+### 6. Run migrations and seeders
+```bash
+php artisan migrate --seed
+```
+
+This will create all necessary tables and populate them with sample data:
+- Users
+- Books (Buku)
+- Book copies (Eksemplar Buku)
+- Students (Siswa)
+- Lending transactions (Peminjaman)
+
+### 7. Storage link
+```bash
+php artisan storage:link
+```
+
+### 8. Start development servers
+
+**Option 1: Using composer script (recommended)**
+```bash
+composer run dev
+```
+This will start all services concurrently:
+- Laravel development server (port 8000)
+- Queue worker
+- Log viewer (Pail)
+- Vite dev server
+
+**Option 2: Manual start**
+```bash
+# Terminal 1 - Laravel
+php artisan serve
+
+# Terminal 2 - Vite
+npm run dev
+```
+
+## 🌐 Access the Application
+
+Once the servers are running, access the application at:
+- **Application**: http://localhost:8000
+- **Vite Dev Server**: http://localhost:5173
+
+## 📁 Project Structure
+
+```
+SIPerpustakaan/
+├── app/
+│   ├── Http/
+│   │   └── Controllers/
+│   │       ├── BukuController.php           # Books management
+│   │       ├── EksemplarBukuController.php  # Book copies
+│   │       ├── SiswaController.php          # Students
+│   │       ├── PeminjamanController.php     # Lending
+│   │       ├── PengembalianController.php   # Returns
+│   │       ├── HomeController.php           # Homepage
+│   │       └── UserController.php           # User management
+│   └── Models/
+│       ├── Buku.php                         # Book model
+│       ├── EksemplarBuku.php                # Book copy model
+│       ├── Siswa.php                        # Student model
+│       ├── Peminjaman.php                   # Lending model
+│       └── User.php                         # User model
+├── database/
+│   ├── migrations/                          # Database migrations
+│   └── seeders/                             # Sample data seeders
+├── resources/
+│   ├── views/                               # Blade templates
+│   ├── css/                                 # Stylesheets
+│   └── js/                                  # JavaScript files
+└── routes/
+    └── web.php                              # Application routes
+```
+
+## 🗄️ Database Schema
+
+### Main Tables
+- **bukus** - Book catalog (kode_buku, judul, pengarang, tahun_terbit, cover)
+- **eksemplar_bukus** - Book copies (nomor_eksemplar, kode_buku)
+- **siswas** - Students (nis, nama, kelas)
+- **peminjamen** - Lending transactions (nis, nomor_eksemplar, tanggal_peminjaman, tanggal_pengembalian, jumlah_denda)
+- **users** - System users (authentication)
+
+## 🧪 Testing
+
+Run the test suite:
+```bash
+php artisan test
+```
+
+## 📝 Key Features Details
+
+### Fine Calculation System
+- **Borrowing Period**: 7 days
+- **Late Fee**: Rp 1,000 per day
+- Automatic calculation on return
+- Tracks payment status
+
+### Book Availability Tracking
+- Real-time availability check
+- Tracks each book copy independently
+- Shows available vs total copies
+- Popular books based on lending frequency
+
+### Soft Delete Implementation
+- Books can be soft deleted
+- Maintains data integrity
+- Can be restored if needed
+
+## 🔒 Security Features
+
+- CSRF protection on all forms
+- Password hashing with bcrypt
+- SQL injection prevention via Eloquent ORM
+- XSS protection through Blade templates
+- Secure authentication with Laravel Breeze
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## 👨‍💻 Developer
+
+**Hafidz Mulia**
+- GitHub: [@hafidzmulia-its](https://github.com/hafidzmulia-its)
+
+## 📧 Support
+
+For support, please open an issue in the GitHub repository or contact the developer.
+
+---
+
+Built with ❤️ using Laravel 12 and modern web technologies

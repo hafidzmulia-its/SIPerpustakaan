@@ -69,10 +69,33 @@ A comprehensive web-based library management system built with modern web techno
 - **Faker** - Test data generation
 - **Concurrently** - Run multiple dev servers
 
-### Deployment
-- **Railway** - Cloud platform deployment
-- **Nixpacks** - Build configuration
-- Procfile for process management
+## Deployment Checklist
+
+Before pushing to production:
+
+1. Run production build:
+   ```bash
+   npm run build
+   ```
+
+2. Commit built assets:
+   ```bash
+   git add public/build
+   git commit -m "Build assets for production v1.x.x"
+   ```
+
+3. Push to repository:
+   ```bash
+   git push origin main
+   ```
+
+4. On server, pull changes:
+   ```bash
+   git pull origin main
+   php artisan config:cache
+   php artisan route:cache
+   php artisan view:cache
+   ```
 
 ## 📋 Prerequisites
 

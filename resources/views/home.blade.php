@@ -12,7 +12,7 @@
             <!-- Greeting -->
             <div>
                 <h1 class="text-5xl font-extrabold text-[#493628]">
-                    Halo, {{ (Auth::user()->level_user === "Siswa") ? Auth::user()->siswa->nama_siswa : Auth::user()->username }}!
+                    Haloo, {{ (Auth::user()->level_user === "Siswa") ? Auth::user()->siswa->nama_siswa : Auth::user()->username }}!
                 </h1>
                 <p class="text-2xl pt-3 font-medium text-[#493628]">{{ Auth::user()->level_user }}</p>
             </div>

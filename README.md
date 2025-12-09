@@ -1,4 +1,4 @@
-# 📚 SI Perpustakaan (Library Management System)
+# 📚 Literasik (Library Management System)
 
 A comprehensive web-based library management system built with modern web technologies. This application streamlines library operations including book management, student records, lending transactions, and overdue fine calculations.
 

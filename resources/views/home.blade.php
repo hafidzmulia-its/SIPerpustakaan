@@ -97,7 +97,7 @@
                                     <button
                                             class="mt-2 text-xs text-white bg-[#493628] px-2 py-1 rounded"
                                             @click="bukuDetail.open(buku)"
-                                            >Details
+                                            >Detail
                                         </button>
                                 </div>
                             </div>
